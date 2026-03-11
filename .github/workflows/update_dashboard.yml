@@ -1,0 +1,54 @@
+name: Update LLM Portfolio Dashboard
+
+on:
+  schedule:
+    # Every 30 minutes, Mon–Fri (UTC)
+    # Covers Texas trading hours (CT = UTC-5/UTC-6)
+    - cron: '0,30 * * * 1-5'
+
+  # Manual trigger anytime from GitHub Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Cancel any in-progress deploy when a new run starts
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install yfinance pandas
+
+      - name: Generate dashboard
+        run: python run_portfolio.py
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './docs'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
