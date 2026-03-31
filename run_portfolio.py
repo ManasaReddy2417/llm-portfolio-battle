@@ -716,3 +716,65 @@ os.makedirs('docs', exist_ok=True)
 with open('docs/index.html', 'w', encoding='utf-8') as f:
     f.write(html_content)
 print(f'SUCCESS: docs/index.html saved ({len(html_content)//1024} KB)')
+
+import matplotlib.pyplot as plt
+import os
+
+def generate_chart(llm_results, stock_data, all_trading_days):
+    # ── Prepare data ─────────────────────────────────────
+    date_labels = [d.strftime('%b %-d') for d in all_trading_days]
+
+    sp500_prices = stock_data['^GSPC']['prices']
+    sp500_norm = [(p / sp500_prices[0]) * 1000 for p in sp500_prices]
+
+    chatgpt = llm_results['ChatGPT']['cumulative_values']
+    claude  = llm_results['Claude AI']['cumulative_values']
+    deepseek= llm_results['DeepSeek']['cumulative_values']
+    grok    = llm_results['Grok']['cumulative_values']
+
+    # ── Figure setup (MATCH YOUR IMAGE) ──────────────────
+    plt.figure(figsize=(14, 8), dpi=100)
+    ax = plt.gca()
+    ax.set_facecolor('#f5f5f5')
+
+    # ── Plot lines (EXACT COLORS FROM DASHBOARD) ─────────
+    plt.plot(date_labels, sp500_norm, marker='o', linewidth=2.8, markersize=6,
+             label='S&P 500', color='#f59e0b')
+
+    plt.plot(date_labels, chatgpt, marker='o', linewidth=2.8, markersize=6,
+             label='ChatGPT', color='#6366f1')
+
+    plt.plot(date_labels, claude, marker='o', linewidth=2.8, markersize=6,
+             label='Claude AI', color='#10b981')
+
+    plt.plot(date_labels, deepseek, marker='o', linewidth=2.8, markersize=6,
+             label='DeepSeek', color='#8b5cf6')
+
+    plt.plot(date_labels, grok, marker='o', linewidth=2.8, markersize=6,
+             label='Grok', color='#ef4444')
+
+    # ── Grid (horizontal only) ───────────────────────────
+    plt.grid(axis='y', linestyle='-', linewidth=0.6, alpha=0.3)
+
+    # ── Clean axes ──────────────────────────────────────
+    for spine in ['top', 'right']:
+        ax.spines[spine].set_visible(False)
+
+    # ── Legend (bottom center) ──────────────────────────
+    plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.08),
+               ncol=5, frameon=False)
+
+    # ── Layout ─────────────────────────────────────────
+    plt.xticks(rotation=0)
+    plt.tight_layout()
+
+    # ── Save to Desktop ────────────────────────────────
+    desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+    file_path = os.path.join(desktop_path, "portfolio_chart.png")
+
+    plt.savefig(file_path, dpi=300)
+    plt.close()
+
+    print(f"\n📊 Chart saved to Desktop: {file_path}")
+
+    generate_chart(llm_results, stock_data, all_trading_days)
