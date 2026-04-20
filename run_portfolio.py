@@ -157,6 +157,18 @@ WEEKS_DATA = [
         'DeepSeek': [{"stock": "GS", "weight": 25},{"stock": "ALLO", "weight": 20},{"stock": "SKYQ", "weight": 20},{"stock": "NFLX", "weight": 20},{"stock": "XLE", "weight": 15}],
         'Claude AI':[{"stock": "JPM", "weight": 18},{"stock": "NFLX", "weight": 15},{"stock": "MSFT", "weight": 14},{"stock": "NVDA", "weight": 13},{"stock": "MS", "weight": 10},{"stock": "AVGO", "weight": 10},{"stock": "BLK", "weight": 8},{"stock": "PLTR", "weight": 7},{"stock": "XOM", "weight": 5},{"stock": "COP", "weight": 5}]
        }
+   },
+  # Week 12: Apr 20-24, 2026 -----------------------------------------------
+{
+    'week_num': 12,
+    'start_date': datetime(2026, 4, 20),
+    'end_date': datetime(2026, 4, 24),
+    'portfolios': {
+        'ChatGPT':  [{"stock": "NVDA", "weight": 25},{"stock": "TSLA", "weight": 20},{"stock": "AMD", "weight": 15},{"stock": "META", "weight": 15},{"stock": "AMZN", "weight": 10},{"stock": "COIN", "weight": 10},{"stock": "PLTR", "weight": 5}],
+        'Grok':     [{"stock": "NVDA", "weight": 35},{"stock": "AMD", "weight": 25},{"stock": "MU", "weight": 20},{"stock": "PLTR", "weight": 10},{"stock": "GOOGL", "weight": 10}],
+        'DeepSeek': [{"stock": "TSLA", "weight": 20},{"stock": "INTC", "weight": 15},{"stock": "BA", "weight": 10},{"stock": "IBM", "weight": 10},{"stock": "NVDA", "weight": 10},{"stock": "AMD", "weight": 10},{"stock": "PLTR", "weight": 10},{"stock": "ATAI", "weight": 5},{"stock": "CMPS", "weight": 5},{"stock": "GHRS", "weight": 5}],
+        'Claude AI':[{"stock": "AMZN", "weight": 20},{"stock": "TSLA", "weight": 15},{"stock": "NBIS", "weight": 12},{"stock": "LRCX", "weight": 10},{"stock": "INTC", "weight": 10},{"stock": "PAHC", "weight": 8},{"stock": "MRVL", "weight": 8},{"stock": "ROAD", "weight": 7},{"stock": "MXL", "weight": 5},{"stock": "GOLD", "weight": 5}]
+       }
    }
 ]
 print(f' {len(WEEKS_DATA)} weeks defined')
